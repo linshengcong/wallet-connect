@@ -7,6 +7,7 @@ import { sepolia } from 'wagmi/chains';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import '@rainbow-me/rainbowkit/styles.css';
 import { EthersProvider } from './ethersProvider';
+import { ViemProvider } from './viemProvider';
 
 const config = getDefaultConfig({
   appName: 'My Web3 App',
@@ -21,9 +22,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={config}>
       <EthersProvider>
-        <QueryClientProvider client={queryClient}>
-          <RainbowKitProvider>{children}</RainbowKitProvider>
-        </QueryClientProvider>
+        <ViemProvider>
+          <QueryClientProvider client={queryClient}>
+            <RainbowKitProvider>{children}</RainbowKitProvider>
+          </QueryClientProvider>
+        </ViemProvider>
       </EthersProvider>
     </WagmiProvider>
   );
