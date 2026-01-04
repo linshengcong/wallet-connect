@@ -12,7 +12,7 @@ export default function SendEth() {
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!to || !value) return;
-    sendTransaction({ 
+    sendTransaction({
       to: to as `0x${string}`, 
       value: parseEther(value) 
     });
@@ -22,7 +22,7 @@ export default function SendEth() {
     <div className="p-4 border rounded shadow-sm bg-white">
       <h3 className="font-bold text-gray-700 mb-2">2. 发送 ETH</h3>
       <form onSubmit={handleSend} className="space-y-3">
-        <input 
+        <input
           value={to}
           onChange={(e) => setTo(e.target.value)}
           placeholder="接收地址 (0x...)" 

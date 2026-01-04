@@ -5,7 +5,7 @@ import { formatUnits } from 'viem';
 
 export default function TokenBalance() {
   const { address, isConnected } = useAccount();
-  
+
   const { data: balance, isLoading, error } = useReadContract({
     address: ERC20_ADDRESS,
     abi: ERC20_ABI,

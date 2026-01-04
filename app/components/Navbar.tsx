@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navLinks = [
-  { href: "/", label: "首页" },
-  { href: "/about", label: "关于" },
-  { href: "/contact", label: "联系" },
+  { href: "/", label: "wagmi" },
+  { href: "/ethersPage", label: "ethers" },
+  { href: "/viemPage", label: "viem" },
 ];
 
 export default function Navbar() {

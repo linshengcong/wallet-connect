@@ -1,4 +1,4 @@
-export default function ContactPage() {
+export default function ViemPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-black">
       <div className="w-full max-w-3xl px-6 py-24">

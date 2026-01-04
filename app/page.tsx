@@ -4,11 +4,11 @@ import dynamic from 'next/dynamic';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 // 使用 dynamic import 并禁用 SSR，避免 Hydration 错误
-const EthBalance = dynamic(() => import('./components/web3/EthBalance'), { ssr: false });
-const SendEth = dynamic(() => import('./components/web3/SendEth'), { ssr: false });
-const TokenBalance = dynamic(() => import('./components/web3/TokenBalance'), { ssr: false });
-const TransferListener = dynamic(() => import('./components/web3/TransferListener'), { ssr: false });
-const TokenTransfer = dynamic(() => import('./components/web3/TokenTransfer'), { ssr: false });
+const EthBalance = dynamic(() => import('./components/web3/wagmi/EthBalance'), { ssr: false });
+const SendEth = dynamic(() => import('./components/web3/wagmi/SendEth'), { ssr: false });
+const TokenBalance = dynamic(() => import('./components/web3/wagmi/TokenBalance'), { ssr: false });
+const TransferListener = dynamic(() => import('./components/web3/wagmi/TransferListener'), { ssr: false });
+const TokenTransfer = dynamic(() => import('./components/web3/wagmi/TokenTransfer'), { ssr: false });
 
 export default function Home() {
   return (
