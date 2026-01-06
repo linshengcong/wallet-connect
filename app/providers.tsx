@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useSyncExternalStore } from 'react';
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { Config, http, WagmiProvider } from 'wagmi';
 import { sepolia } from 'wagmi/chains';
@@ -9,30 +9,44 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { EthersProvider } from './ethersProvider';
 import { ViemProvider } from './viemProvider';
 
-// const config = getDefaultConfig({
-//   appName: 'My Web3 App',
-//   projectId: '5ca6481675fc0944dd1f48aa12538b31',
-//   chains: [sepolia],
-//   ssr: true,
-// });
+// ✅ 使用 useSyncExternalStore 检测客户端挂载（React 18+ 推荐方式）
+const emptySubscribe = () => () => {};
+function useIsClient() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,  // 客户端返回 true
+    () => false  // SSR 返回 false
+  );
+}
 
-// const queryClient = new QueryClient();
+// ✅ 在模块级别创建配置（只在客户端执行）
+let cachedConfig: Config | null = null;
+function getConfig(): Config {
+  if (!cachedConfig) {
+    cachedConfig = getDefaultConfig({
+      appName: 'My Web3 App',
+      projectId: '5ca6481675fc0944dd1f48aa12538b31',
+      chains: [sepolia],
+      ssr: true,
+      transports: {
+        [sepolia.id]: http('https://ethereum-sepolia-rpc.publicnode.com'),
+      },
+    });
+  }
+  return cachedConfig;
+}
 
 export function Providers({ children }: { children: React.ReactNode }) {
-    // ✅ 在组件内部使用 useState 懒加载，确保只在客户端创建
-    const [config] = useState<Config>(() =>
-      getDefaultConfig({
-        appName: 'My Web3 App',
-        projectId: '5ca6481675fc0944dd1f48aa12538b31',
-        chains: [sepolia],
-        ssr: true,
-        transports: {
-          [sepolia.id]: http('https://ethereum-sepolia-rpc.publicnode.com'),
-        },
-      })
-    );
-  
-    const [queryClient] = useState(() => new QueryClient());
+  const isClient = useIsClient();
+  const [queryClient] = useState(() => new QueryClient());
+
+  // ✅ SSR 时渲染占位符
+  if (!isClient) {
+    return <>{children}</>;
+  }
+
+  const config = getConfig();
+
   return (
     <WagmiProvider config={config}>
       <EthersProvider>
