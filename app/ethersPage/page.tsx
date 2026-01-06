@@ -1,9 +1,11 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-// import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { EthersConnectButton } from '../components/web3/ethers/EthersConnectButton';
 
+const EthersConnectButton = dynamic(
+  () => import('../components/web3/ethers/EthersConnectButton').then(mod => ({ default: mod.EthersConnectButton })),
+  { ssr: false }
+);
 const EthBalance = dynamic(
   () => import('../components/web3/ethers/EthBalance'),
   { ssr: false }

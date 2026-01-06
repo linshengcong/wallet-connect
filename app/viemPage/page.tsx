@@ -1,9 +1,11 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { ViemConnectButton } from '../components/web3/viem/ViemConnectButton';
 
-// 使用 dynamic import 并禁用 SSR，避免 Hydration 错误
+const ViemConnectButton = dynamic(
+  () => import('../components/web3/viem/ViemConnectButton').then(mod => ({ default: mod.ViemConnectButton })),
+  { ssr: false }
+);
 const EthBalance = dynamic(() => import('../components/web3/viem/EthBalance'), {
   ssr: false,
 });
