@@ -42,7 +42,7 @@ export function ViemProvider({ children }: { children: ReactNode }) {
   const [publicClient] = useState<PublicClient>(() =>
     createPublicClient({
       chain: sepolia,
-      transport: http(),
+      transport: http('https://ethereum-sepolia-rpc.publicnode.com'),
     })
   );
 
